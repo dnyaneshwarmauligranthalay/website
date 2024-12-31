@@ -1,0 +1,28 @@
+.header-container {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* padding-bottom: 5px; */
+    color: #d72d12;
+    border-bottom: #d72d12 1px solid;
+    padding-bottom: 2px;
+}
+
+.logo {
+    margin: 0 2%;
+    height: 4em;
+    will-change: filter;
+    transition: filter 300ms;
+    justify-items: center;
+}
+
+.links-container {
+    float: right;
+    margin: 5px;
+}
+
+.links {
+    margin-left: 10px;
+}

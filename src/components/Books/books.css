@@ -1,0 +1,18 @@
+.books-container {
+    display: inline-flex;
+    width: -webkit-fill-available;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-box {
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+.right{
+    right: 0;
+}

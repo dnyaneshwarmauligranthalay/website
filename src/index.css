@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&display=swap');
+
+.tiro-devanagari-marathi-regular {
+  font-family: "Tiro Devanagari Marathi";
+  font-weight: 400;
+  font-style: normal;
+}
+
+.tiro-devanagari-marathi-regular-italic {
+  font-family: "Tiro Devanagari Marathi";
+  font-weight: 400;
+  font-style: italic;
+}
+
+body {
+  /* background-color: #f4ece3; */
+  background-color: #ffffff;
+}
