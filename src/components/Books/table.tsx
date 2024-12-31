@@ -49,11 +49,21 @@ function Table() {
     const [data, setData] = React.useState<{ [key: string]: string }[]>([])
     // const [columns, setColumns] = React.useState<ColumnDef<string, any>[]>([])
     const [columns, setColumns] = React.useState<ColumnDef<{ [key: string]: string }, any>[]>([])
+    
+    // function stringToAsciiArray(str: string): number[] {
+    //     return Array.from(str).map(char => char.charCodeAt(0));
+    // }
+    
+    function asciiArrayToString(asciiArray: number[]): string {
+        return asciiArray.map(code => String.fromCharCode(code)).join('');
+    }
 
     const fetch = async () => {
 
         try {
-            const doc = new GoogleSpreadsheet(config.fileId, { apiKey: config.key });
+            // var apiKeyArr = stringToAsciiArray("")
+            var apikey = asciiArrayToString(config.key)
+            const doc = new GoogleSpreadsheet(config.fileId, { apiKey: apikey });
             await doc.loadInfo();
 
             const configSheet = doc.sheetsByTitle[config.configSheetName]; // or use `doc.sheetsById[id]` or `doc.sheetsByTitle[title]`

@@ -1,9 +1,9 @@
 {
-  "name": "dmlib",
+  "name": "website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://mrsuhasg.github.io/dmlib/",
+  "homepage": "https://dnyaneshwarmauligranthalay.github.io/website/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
