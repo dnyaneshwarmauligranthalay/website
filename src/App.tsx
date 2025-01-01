@@ -4,34 +4,12 @@ import BooksList from './components/Books/booksList'
 import Header from './components/Header/header'
 import Home from './components/Home/home'
 import Footer from './components/Footer/footer'
+import About from './components/About/about'
 
 function App() {
 
   return (
     <>
-      {/* <Header></Header>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/books" element={<BooksList />} />
-      </Routes>
-      <div className='footer'>
-        <Footer></Footer>
-      </div> */}
-
-      {/* <header className="header">
-          <Header></Header>
-        </header>
-
-        <main className="main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/books" element={<BooksList />} />
-          </Routes>        </main>
-
-        <footer className="footer">
-          <Footer></Footer>
-        </footer> */}
-
       <div className="container">
         <header className="header">
           <Header></Header>
@@ -41,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/books" element={<BooksList />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
 

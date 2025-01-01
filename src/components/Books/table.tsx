@@ -22,6 +22,7 @@ import {
 import { GoogleSpreadsheet } from 'google-spreadsheet'
 
 import config from '../../assets/config.json'
+import loader from '../../assets/loader.gif'
 
 declare module '@tanstack/react-table' {
     interface FilterFns {
@@ -49,11 +50,11 @@ function Table() {
     const [data, setData] = React.useState<{ [key: string]: string }[]>([])
     // const [columns, setColumns] = React.useState<ColumnDef<string, any>[]>([])
     const [columns, setColumns] = React.useState<ColumnDef<{ [key: string]: string }, any>[]>([])
-    
+
     // function stringToAsciiArray(str: string): number[] {
     //     return Array.from(str).map(char => char.charCodeAt(0));
     // }
-    
+
     function asciiArrayToString(asciiArray: number[]): string {
         return asciiArray.map(code => String.fromCharCode(code)).join('');
     }
@@ -155,141 +156,152 @@ function Table() {
         }
     }, [table.getState().columnFilters[0]?.id])
 
-    return (
-        <div className="p-2" style={{ width: '100%' }}>
-            <div className='search-box'>
-                <DebouncedInput
-                    value={globalFilter ?? ''}
-                    onChange={value => setGlobalFilter(String(value))}
-                    className="p-2 font-lg shadow border border-block"
-                    placeholder="Search all columns..."
-                />
-            </div>
-            <div className="h-2" />
-            <table style={{ width: '100%' }}>
-                <thead>
-                    {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => {
-                                return (
-                                    <th key={header.id} colSpan={header.colSpan}>
-                                        {header.isPlaceholder ? null : (
-                                            <>
-                                                <div
-                                                    {...{
-                                                        className: header.column.getCanSort()
-                                                            ? 'cursor-pointer select-none'
-                                                            : '',
-                                                        onClick: header.column.getToggleSortingHandler(),
-                                                    }}
-                                                >
-                                                    {flexRender(
-                                                        header.column.columnDef.header,
-                                                        header.getContext()
-                                                    )}
-                                                    {{
-                                                        asc: ' 🔼',
-                                                        desc: ' 🔽',
-                                                    }[header.column.getIsSorted() as string] ?? null}
-                                                </div>
-                                                {header.column.getCanFilter() ? (
-                                                    <div>
-                                                        <Filter column={header.column} />
-                                                    </div>
-                                                ) : null}
-                                            </>
-                                        )}
-                                    </th>
-                                )
-                            })}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    {table.getRowModel().rows.map(row => {
-                        return (
-                            <tr key={row.id}>
-                                {row.getVisibleCells().map(cell => {
+    if (data && data.length > 0)
+        return (
+            <div className="p-2" style={{ width: '100%' }}>
+                <div className='search-box'>
+                    <DebouncedInput
+                        value={globalFilter ?? ''}
+                        onChange={value => setGlobalFilter(String(value))}
+                        className="p-2 font-lg shadow border border-block"
+                        placeholder="Search all columns..."
+                    />
+                </div>
+                <div className="h-2" />
+                <table style={{ width: '100%' }}>
+                    <thead>
+                        {table.getHeaderGroups().map(headerGroup => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map(header => {
                                     return (
-                                        <td key={cell.id} >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )
-                                            }
-                                        </td>
+                                        <th key={header.id} colSpan={header.colSpan}>
+                                            {header.isPlaceholder ? null : (
+                                                <>
+                                                    <div
+                                                        {...{
+                                                            className: header.column.getCanSort()
+                                                                ? 'cursor-pointer select-none'
+                                                                : '',
+                                                            onClick: header.column.getToggleSortingHandler(),
+                                                        }}
+                                                    >
+                                                        {flexRender(
+                                                            header.column.columnDef.header,
+                                                            header.getContext()
+                                                        )}
+                                                        {{
+                                                            asc: ' 🔼',
+                                                            desc: ' 🔽',
+                                                        }[header.column.getIsSorted() as string] ?? null}
+                                                    </div>
+                                                    {header.column.getCanFilter() ? (
+                                                        <div>
+                                                            <Filter column={header.column} />
+                                                        </div>
+                                                    ) : null}
+                                                </>
+                                            )}
+                                        </th>
                                     )
                                 })}
                             </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <div className="h-2" />
-            <div className="flex items-center gap-2 center ">
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.setPageIndex(0)}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    {'<<'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    {'<'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                >
-                    {'>'}
-                </button>
-                <button
-                    className="border rounded p-1"
-                    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                    disabled={!table.getCanNextPage()}
-                >
-                    {'>>'}
-                </button>
-                <span className="flex items-center gap-1">
-                    <div>Page</div>
-                    <strong>
-                        {table.getState().pagination.pageIndex + 1} of{' '}
-                        {table.getPageCount()}
-                    </strong>
-                </span>
-                <span className="flex items-center gap-1">
-                    | Go to page:
-                    <input
-                        type="number"
-                        defaultValue={table.getState().pagination.pageIndex + 1}
+                        ))}
+                    </thead>
+                    <tbody>
+                        {table.getRowModel().rows.map(row => {
+                            return (
+                                <tr key={row.id}>
+                                    {row.getVisibleCells().map(cell => {
+                                        return (
+                                            <td key={cell.id} >
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )
+                                                }
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                <div className="h-2" />
+                <div className="flex items-center gap-2 center ">
+                    <button
+                        className="border rounded p-1"
+                        onClick={() => table.setPageIndex(0)}
+                        disabled={!table.getCanPreviousPage()}
+                    >
+                        {'<<'}
+                    </button>
+                    <button
+                        className="border rounded p-1"
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}
+                    >
+                        {'<'}
+                    </button>
+                    <button
+                        className="border rounded p-1"
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}
+                    >
+                        {'>'}
+                    </button>
+                    <button
+                        className="border rounded p-1"
+                        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                        disabled={!table.getCanNextPage()}
+                    >
+                        {'>>'}
+                    </button>
+                    <span className="flex items-center gap-1">
+                        <div>Page</div>
+                        <strong>
+                            {table.getState().pagination.pageIndex + 1} of{' '}
+                            {table.getPageCount()}
+                        </strong>
+                    </span>
+                    <span className="flex items-center gap-1">
+                        | Go to page:
+                        <input
+                            type="number"
+                            defaultValue={table.getState().pagination.pageIndex + 1}
+                            onChange={e => {
+                                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                                table.setPageIndex(page)
+                            }}
+                            className="border p-1 rounded w-16"
+                        />
+                    </span>
+                    <select
+                        value={table.getState().pagination.pageSize}
                         onChange={e => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0
-                            table.setPageIndex(page)
+                            table.setPageSize(Number(e.target.value))
                         }}
-                        className="border p-1 rounded w-16"
-                    />
-                </span>
-                <select
-                    value={table.getState().pagination.pageSize}
-                    onChange={e => {
-                        table.setPageSize(Number(e.target.value))
-                    }}
-                >
-                    {[10, 20, 25, 30, 40, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
+                    >
+                        {[10, 20, 25, 30, 40, 50].map(pageSize => (
+                            <option key={pageSize} value={pageSize}>
+                                Show {pageSize}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className='center'>{table.getPrePaginationRowModel().rows.length} Rows</div>
             </div>
-            <div className='center'>{table.getPrePaginationRowModel().rows.length} Rows</div>
-        </div>
-    )
+        )
+    else
+        return (
+            <div className='center'>
+                <img src={loader} alt='Loader' className='bookloader' />
+                <br></br>
+                <p>
+                    Loading...
+                </p>
+            </div>
+        )
 }
 
 function Filter({ column }: { column: Column<any, unknown> }) {

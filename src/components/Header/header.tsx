@@ -16,6 +16,7 @@ function Header() {
       </div >
       <div className='links-container'>
         <Link to="/" className='links'>Home</Link>
+        <Link to="/about" className='links'>About</Link>
         <Link to="/books" className='links'>Books</Link>
       </div>
     </>

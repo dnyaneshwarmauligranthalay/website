@@ -16,3 +16,9 @@ body {
   /* background-color: #f4ece3; */
   background-color: #ffffff;
 }
+
+.bookloader{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}

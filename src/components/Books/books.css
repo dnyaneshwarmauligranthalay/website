@@ -1,8 +1,9 @@
 .books-container {
-    display: inline-flex;
+    /* display: inline-flex; */
     width: -webkit-fill-available;
     align-items: center;
     justify-content: center;
+    /* text-align: center; */
 }
 
 .search-box {
